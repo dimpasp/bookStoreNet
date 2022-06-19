@@ -1,0 +1,73 @@
+﻿@model Library.ViewModels.Book.BookViewModel
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Book</h4>
+<hr />
+<div class="row table-bordered">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Authors:</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    @for (int i = 0; i < Model.AuthorBooks?.Count(); i++)
+                    {
+                        @Html.CheckBoxFor(model => model.AuthorBooks[i].IsSelected)
+                        @Html.DisplayFor(model => model.AuthorBooks[i].Name)
+                        @Html.HiddenFor(model => model.AuthorBooks[i].Name)
+                        @Html.HiddenFor(model => model.AuthorBooks[i].Id)
+                        <br />
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <label asp-for="Pages" class="control-label"></label>
+                    <input asp-for="Pages" class="form-control" />
+                    <span asp-validation-for="Pages" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="col">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="col">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <label asp-for="bookCategory" class="control-label">Book Category</label>
+                <select asp-for="bookCategory" class="custom-select" asp-items="Html.GetEnumSelectList<Library.ViewModels.Book.BookCategories>()">
+                    <option value="">Please Select Category</option>
+                </select>
+                <span asp-validation-for="bookCategory" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div>
+                <a class="btn btn-warning" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

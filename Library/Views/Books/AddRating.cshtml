@@ -1,0 +1,77 @@
+﻿@using Library.ViewModels.Book
+@model Library.ViewModels.Book.BookViewModel
+
+@{
+    ViewData["Title"] = "AddRating";
+}
+
+<h1>Add Rating</h1>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+    </dl>
+</div>
+<br />
+
+<form method="post" class="mt-3" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <select asp-for="ratingSystemValues" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<RatingSystemValues>()">
+                <option value="">Please Select Rating</option>
+            </select>
+            <span asp-validation-for="ratingSystemValues" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="Comment" class="control-label"></label>
+        <input asp-for="Comment" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="AddRating" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-info">Back to List</a>
+    </div>
+
+</form>
+
+<br />
+<div>
+    <br/>
+    <h4>History</h4>
+    <br />
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{var i=1;}
+            @foreach (var item in ViewBag.RatingStudentBook)
+            {
+                
+                <tr>
+                    <td>@i</td>
+                    <td>@item.Rating</td>
+                    <td>@item.Comment</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+
+</div>

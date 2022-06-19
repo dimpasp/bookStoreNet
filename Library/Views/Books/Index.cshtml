@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Library.ViewModels.Book.BookViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Books</h1>
+
+<form method="get">
+    <div class="input-group">
+        <input type="text" id="searchTerm" name="searchTerm"  onchange="changeFunction()" Placeholder="Search books..." >
+        
+       @* <div class="input-group-append">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+        </div>*@
+    </div>
+</form>
+<br/>
+
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+}
+<table class="table table-bordered table-striped" id="tblData">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+              <a asp-action="Index" asp-route-sortName="@ViewData["TitleSortTable"]" style="color:white" >@Html.DisplayNameFor(model => model.Title)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pages)
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortName="@ViewData["PriceSortTable"]" style="color:white" >@Html.DisplayNameFor(model => model.Price)</a>
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Available
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortName="@ViewData["RatingSortTable"]" style="color:white" > @Html.DisplayNameFor(model => model.Rating)</a>
+            </th>
+            <th></th>
+            <th>Rented</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pages)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bookCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.availableBooks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                    
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" asp-action="Details" asp-route-id="@item.Id">
+                        <i class="bi bi-info-square"></i>
+                    </a>
+                    <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" asp-action="DeleteBookFromStudent" asp-route-id="@item.Id">
+                        <i class="bi bi-dash-circle"></i>
+                    </a>
+                   
+                    <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" asp-action="AddRating" asp-route-id="@item.Id">
+                        <i class="bi bi-star-fill"></i>
+                    </a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" asp-action="Edit" asp-route-id="@item.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" asp-action="Delete" asp-route-id="@item.Id">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    }
+                    @if (item.availableBooks > 0)
+                    {
+                        <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" asp-action="AddBookToStudent" asp-route-id="@item.Id">
+                            <i class="bi bi-plus-circle-fill"></i>
+                        </a>
+
+                    }
+                    else
+                    {
+                           <d class="text-danger"> Book out of stock!</d>
+                    }
+                </td>
+                <td>
+                    @if (item.BooksExists == true)
+                    {
+                        <i class="bi bi-check-circle-fill"></i>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script  type="text/javascript">
+$(document).ready(function () {
+    $("#searchTerm").change(function () {
+        var data = $(this).val();       
+        var Emp = {}; 
+        Emp.EmpName = $("#searchTerm").val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Index")',
+                data: Emp,
+                dataType: "html",
+                success: function (evt) {},
+            });  
+    });
+});
+</script>

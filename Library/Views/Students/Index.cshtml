@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Library.ViewModels.Student.StudentViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<br />
+<h1>Students</h1>
+<br/>
+
+<div class="row">
+@foreach (var item in Model)
+{
+        <div class="col-sm-6 mt-4">
+            <div class="card">
+                <div class="card-body table-dark">
+                    <h5 class="card-title">@item.Name</h5>
+                </div>
+                <ul class="list-group list-group-flush list-group-item-striped">
+                    <li class="list-group-item">Phone   : @item.Phone</li>
+                    <li class="list-group-item">Email   : @item.Email</li>
+                    <li class="list-group-item">Address : @item.Address</li>
+                    <li class="list-group-item">City    : @item.City</li>
+                    <li class="list-group-item">Gender  : @item.Gender</li>
+                </ul>
+                <div class="card-body table-bordered">
+                    <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" asp-action="Details" asp-route-id="@item.Id">
+                        <i class="bi bi-info-square"></i>
+                    </a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" asp-action="Edit" asp-route-id="@item.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm active" role="button" aria-pressed="true" asp-action="Delete" asp-route-id="@item.Id">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+}
+</div>

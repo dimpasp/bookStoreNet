@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Contact us</h2>
+<br />
+
+<img src="lib/librarystockimages/Table.jpg" class="img-fluid" alt="Responsive image">
+<br />
+
+<h5 style="font-family: 'Amatic SC', cursive;">
+    Welcome to our Eshop.
+    For any questions do not hesitate to inform us.
+</h5>
+<br />
+
+<form asp-action="CreateEmail">
+    <div class="form-group">
+    <label for="emailText">Please inform us with email!</label>
+    <textarea class="form-control" id="emailText" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br/>
+<br/>
+<h5>Our stores</h5>
+<br/>
+
+@{
+    int i = 1;
+}
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+        </>
+    <tbody>
+            @foreach (var item in ViewBag.AllStore)
+            {
+            <tr>
+                <th scope="row">@i</th>
+                <td>@item.Name</td>
+                <td>@item.City</td>
+                <td>@item.Address</td>
+            </tr>
+                i++;
+            }
+    </tbody>
+</table>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">

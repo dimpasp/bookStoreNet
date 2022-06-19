@@ -1,0 +1,12 @@
+X-Sender: test@test.com
+X-Receiver: "takis2" <takis2@takis.com>
+MIME-Version: 1.0
+From: test@test.com
+To: "takis2" <takis2@takis.com>
+Date: 3 May 2022 12:47:23 +0300
+Subject: Thanks
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+RGVhciB0YWtpczIgLg0KPHA+WW91IGhhdmUgc3VjY2Vzc2Z1bGx5IHJlZ2lzdHJhdGUg
+dG8gb3VyIGFwcGxpY2F0aW9uLjwvcD4NCg==
